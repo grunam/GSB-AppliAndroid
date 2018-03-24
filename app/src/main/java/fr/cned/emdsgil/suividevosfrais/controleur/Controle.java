@@ -75,7 +75,8 @@ public final class Controle {
         profil = new Profil(success, status, username, mdp);
         // Serializer.serialize(nomFic, profil, contexte);
         // accesLocal.ajout(profil);
-        accesDistant.envoi("connexion", profil.convertToJSONArray());
+        accesDistant = new AccesDistant() ;
+        accesDistant.envoi("connexion", profil.convertToJSONArray()) ;
     }
 
     /**

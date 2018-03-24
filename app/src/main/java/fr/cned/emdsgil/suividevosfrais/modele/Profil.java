@@ -64,7 +64,9 @@ public class Profil implements Serializable {
         liste.add(status);
         liste.add(username);
         liste.add(mdp);
+        //Log.d("JSONArray : ", "************" + new JSONArray(liste));
         return new JSONArray(liste);
+
     }
 
     public String getSuccess() {

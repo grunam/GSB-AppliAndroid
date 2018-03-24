@@ -44,11 +44,14 @@ public class AccesDistant implements AsyncResponse {
         // découpage du message reçu
         String[] message = output.split("%");
         // contrôle si le serveur a retourné une information
+        //Log.d("msg", "************" + message[1]);
+
         if(message.length>1){
             if(message[0].equals("enreg")){
                 // retour suite à un enregistrement distant d'un profil
                 Log.d("retour", "************enreg="+message[1]);
             }else if(message[0].equals("connexion")){
+
                 // retour suite à la récupération du dernier profil
                 //Log.d("retour", "************dernier="+message[1]);
                 try {
@@ -79,6 +82,9 @@ public class AccesDistant implements AsyncResponse {
      * @param lesDonneesJSON
      */
     public void envoi(String operation, JSONArray lesDonneesJSON){
+
+        Log.d("Json : ", "************"+lesDonneesJSON.toString());
+
         AccesHTTP accesDonnees = new AccesHTTP();
         // permet de faire le lien asynchrone avec AccesHTTP
         accesDonnees.delegate = this;
@@ -87,7 +93,6 @@ public class AccesDistant implements AsyncResponse {
         accesDonnees.addParam("lesdonnees", lesDonneesJSON.toString());
         // appel du serveur
 
-        Log.d("Json : ", "************"+lesDonneesJSON);
 
 
         accesDonnees.execute(SERVERADDR);

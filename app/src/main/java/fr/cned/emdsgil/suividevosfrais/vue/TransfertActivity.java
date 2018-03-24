@@ -76,8 +76,8 @@ public class TransfertActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
 
-                String success = "1";
-                String status = "";
+                String success = "0";
+                String status = "0";
                 String username = "" ;
                 String mdp = "" ;
 
@@ -114,8 +114,17 @@ public class TransfertActivity extends AppCompatActivity {
      * Récupération d'un profil sérialisé
      */
     public void recupProfil() {
-        if(controle.getSuccess() == "1") {
-            txtUsername.setText(""+ controle.getUsername());
+
+
+        Log.d("controle.getSuccess()", "************controle.getSuccess() = "+controle.getSuccess());
+        Log.d("controle.getUsername()", "************controle.getUsername() = "+controle.getUsername());
+        Log.d("controle.getMdp()", "************controle.getMdp() = "+controle.getMdp());
+        Log.d("controle.getStatus()", "************controle.getStatus() = "+controle.getStatus());
+
+
+        if(controle.getSuccess().equals("1")) {
+
+            txtUsername.setText(""+controle.getUsername());
             txtPassword.setText(""+controle.getMdp());
             txtStatus.setText("Statut : "+controle.getStatus());
         } else {

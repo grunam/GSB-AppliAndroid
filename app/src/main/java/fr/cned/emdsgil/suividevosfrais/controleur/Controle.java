@@ -94,6 +94,7 @@ public final class Controle {
      */
     public void setProfil(Profil profil){
         Controle.profil = profil;
+        Log.d("Profil : ", "************" + profil);
         ((TransfertActivity)contexte).recupProfil();
     }
 

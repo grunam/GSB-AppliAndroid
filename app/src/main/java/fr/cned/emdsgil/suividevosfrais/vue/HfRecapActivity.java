@@ -15,6 +15,8 @@ import android.widget.ListView;
 
 import android.util.Log;
 
+import org.json.JSONArray;
+
 import java.util.Arrays;
 import java.util.ArrayList;
 
@@ -75,8 +77,8 @@ public class HfRecapActivity extends AppCompatActivity {
 
 
 
-		String str = Arrays.toString(liste.toArray());
-		Log.i("liste : ", "************" + str);
+		//String str = Arrays.toString(liste.toArray());
+		//Log.d("liste : ", "************" + new JSONArray(liste));
 
 		FraisHfAdapter adapter = new FraisHfAdapter(HfRecapActivity.this, liste) ;
 		listView.setAdapter(adapter) ;

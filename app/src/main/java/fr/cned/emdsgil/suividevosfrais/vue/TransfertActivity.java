@@ -15,6 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import fr.cned.emdsgil.suividevosfrais.R;
@@ -80,6 +85,7 @@ public class TransfertActivity extends AppCompatActivity {
                 String status = "0";
                 String username = "" ;
                 String mdp = "" ;
+                List data = new ArrayList() ;
 
                 try {
                     username = txtUsername.getText().toString() ;
@@ -90,7 +96,7 @@ public class TransfertActivity extends AppCompatActivity {
                 if (username.length() == 0 || mdp.length() == 0) {
                     Toast.makeText(TransfertActivity.this, "Veuillez saisir tous les champs", Toast.LENGTH_SHORT).show();
                 }else{
-                    afficheResult(success, status, username, mdp) ;
+                    afficheResult(success, status, username, mdp, data) ;
                 }
 
             }
@@ -105,10 +111,72 @@ public class TransfertActivity extends AppCompatActivity {
      * @param username
      * @param mdp
      */
-    private void afficheResult(String success, String status, String username, String mdp) {
+    private void afficheResult(String success, String status, String username, String mdp, List data) {
         // envoi des informations au contrôleur pouir créer le profil
-        controle.creerProfil(success, status, username, mdp);
+        controle.creerProfil(success, status, username, mdp, data);
     }
+
+    /**
+     * Récupération des frais du mois courant
+     */
+    public List recupFrais() {
+
+        Calendar cal = Calendar.getInstance() ;
+        Integer currentMonth = cal.get(Calendar.MONTH)+1 ;
+        Integer currentYear = cal.get(Calendar.YEAR) ;
+        Integer key = currentYear*100+currentMonth ;
+        ArrayList<FraisHf> lesFraisHF ;
+        List listeFrais = new ArrayList() ;
+
+        Log.d("date", "************date = "+key) ;
+        //[nbEtape, nbKm, nbNuitee, nbRepas,[]]
+        if (Global.listFraisMois.containsKey(key)) {
+            // frais forfaitaire
+            Integer mois = key ;
+            listeFrais.add(mois) ;
+            Integer nbEtape = Global.listFraisMois.get(key).getEtape() ;
+            listeFrais.add(nbEtape) ;
+            Integer nbKm = Global.listFraisMois.get(key).getKm() ;
+            listeFrais.add(nbKm) ;
+            Integer nbNuitee = Global.listFraisMois.get(key).getNuitee() ;
+            listeFrais.add(nbNuitee) ;
+            Integer nbRepas = Global.listFraisMois.get(key).getRepas() ;
+            listeFrais.add(nbRepas) ;
+
+
+            lesFraisHF = Global.listFraisMois.get(key).getLesFraisHf() ;
+            List listeFraisHF = new ArrayList() ;
+
+            for ( FraisHf unFraisHF : lesFraisHF ) {
+                List listeUnFraisHF = new ArrayList();
+
+                Integer jourFraisHF = unFraisHF.getJour() ;
+                listeUnFraisHF.add(jourFraisHF) ;
+                Float montantFraisHF = unFraisHF.getMontant() ;
+                listeUnFraisHF.add(montantFraisHF) ;
+                String motifFraisHF = unFraisHF.getMotif() ;
+                listeUnFraisHF.add(motifFraisHF) ;
+
+                listeFraisHF.add(listeUnFraisHF) ;
+
+                //listeFraisHF.add(unFraisHF) ;
+
+            }
+
+
+            //[mois, nbEtape, nbKm, nbNuitee, nbRepas, [[jourFraisHF, montantFraisHF, motifFraisHF], [jourFraisHF, montantFraisHF, motifFraisHF]]]
+            Log.d("listeFraisHF", "************listeFraisHF = "+new JSONArray(listeFraisHF)) ;
+            Log.d("fraisHF", "************fraisHF = "+new JSONArray((List)Global.listFraisMois.get(key).getLesFraisHf())) ;
+            listeFrais.add(listeFraisHF) ;
+
+        }
+
+        Log.d("listeFrais", "************listeFrais = "+new JSONArray(listeFrais)) ;
+
+
+        return listeFrais ;
+    }
+
 
     /**
      * Récupération d'un profil sérialisé
@@ -124,16 +192,23 @@ public class TransfertActivity extends AppCompatActivity {
 
         if(controle.getSuccess().equals("1")) {
 
-            txtUsername.setText(""+controle.getUsername());
-            txtPassword.setText(""+controle.getMdp());
+            //txtUsername.setText(""+controle.getUsername());
+            //txtPassword.setText(""+controle.getMdp());
             txtStatus.setText("Statut : "+controle.getStatus());
+
+            String success = "2";
+            String status = "0";
+            String username = controle.getUsername() ;
+            String mdp = controle.getMdp() ;
+            List data =  recupFrais() ;
+
+            afficheResult(success, status, username, mdp, data) ;
+
         } else {
              txtStatus.setText("Statut : "+controle.getStatus());
         }
+
     }
-
-
-
 
 
     /**

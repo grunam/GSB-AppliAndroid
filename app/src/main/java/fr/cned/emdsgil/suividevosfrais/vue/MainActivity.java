@@ -3,11 +3,14 @@ package fr.cned.emdsgil.suividevosfrais.vue;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import org.json.JSONArray;
 
 import java.util.Hashtable;
 
@@ -59,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
                 monHashCast.put((Integer) entry.getKey(), (FraisMois) entry.getValue());
             }
             Global.listFraisMois = monHashCast;
+
+            //System.out.println("*************** listFraisMois : "+Global.listFraisMois);
+            //Log.d("listFraisMois : ", "************" + new JSONArray(Global.listFraisMois));
+
         }
         // si rien n'a été récupéré, il faut créer la liste
         if (Global.listFraisMois == null) {

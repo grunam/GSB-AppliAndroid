@@ -30,6 +30,7 @@ public class Profil implements Serializable {
     private String status ;
     private String username ;
     private String mdp ;
+    private List data ;
 
 
     /**
@@ -38,19 +39,22 @@ public class Profil implements Serializable {
      * @param status
      * @param username
      * @param mdp
+     * @param data
      */
-    public Profil(String success, String status, String username, String mdp) {
+    public Profil(String success, String status, String username, String mdp, List data) {
 
 
         Log.d("success : ", "************" + success);
         Log.d("status : ", "************" + status);
         Log.d("username : ", "************" + username);
         Log.d("mdp : ", "************" + mdp);
+        Log.d("data : ", "************" +  new JSONArray(data));
 
-        this.success = success;
-        this.status = status;
-        this.username = username;
-        this.mdp = mdp;
+        this.success = success ;
+        this.status = status ;
+        this.username = username ;
+        this.mdp = mdp ;
+        this.data = data ;
     }
 
 
@@ -59,13 +63,14 @@ public class Profil implements Serializable {
      * @return
      */
     public JSONArray convertToJSONArray(){
-        List liste = new ArrayList();
-        liste.add(success);
-        liste.add(status);
-        liste.add(username);
-        liste.add(mdp);
-        Log.d("JSONArray : ", "************" + new JSONArray(liste));
-        return new JSONArray(liste);
+        List liste = new ArrayList() ;
+        liste.add(success) ;
+        liste.add(status) ;
+        liste.add(username) ;
+        liste.add(mdp) ;
+        liste.add(data) ;
+        Log.d("JSONArray : ", "************" + new JSONArray(liste)) ;
+        return new JSONArray(liste) ;
 
     }
 
@@ -85,5 +90,8 @@ public class Profil implements Serializable {
         return mdp;
     }
 
+    public List getData() {
+        return data;
+    }
 
 }

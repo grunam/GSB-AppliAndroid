@@ -20,6 +20,7 @@ import fr.cned.emdsgil.suividevosfrais.vue.TransfertActivity;
 import org.json.JSONArray;
 
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -71,12 +72,13 @@ public final class Controle {
      * @param username
      * @param mdp
      */
-    public void creerProfil(String success, String status, String username, String mdp) {
-        profil = new Profil(success, status, username, mdp);
+    public void creerProfil(String success, String status, String username, String mdp, List data) {
+        profil = new Profil(success, status, username, mdp, data);
         // Serializer.serialize(nomFic, profil, contexte);
         // accesLocal.ajout(profil);
         accesDistant = new AccesDistant() ;
-        accesDistant.envoi("connexion", profil.convertToJSONArray()) ;
+        String operation = (success == "0")?"connexion":"enreg";
+        accesDistant.envoi(operation, profil.convertToJSONArray()) ;
     }
 
     /**

@@ -1,4 +1,4 @@
-package fr.cned.emdsgil.suividevosfrais.vue;
+package fr.cned.emdsgil.suividevosfrais.activities;
 
 import android.content.res.Resources;
 import android.util.Log;

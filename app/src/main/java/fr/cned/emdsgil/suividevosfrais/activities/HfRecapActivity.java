@@ -1,9 +1,8 @@
-package fr.cned.emdsgil.suividevosfrais.vue;
+package fr.cned.emdsgil.suividevosfrais.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,11 +12,6 @@ import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import android.util.Log;
-
-import org.json.JSONArray;
-
-import java.util.Arrays;
 import java.util.ArrayList;
 
 import fr.cned.emdsgil.suividevosfrais.R;

@@ -1,21 +1,16 @@
-package fr.cned.emdsgil.suividevosfrais.modele;
-
-//import com.example.emds.coach.outils.MesOutils;
+package fr.cned.emdsgil.suividevosfrais.connexion;
 
 import android.util.Log;
 
 import org.json.JSONArray;
-
-import java.io.Serializable;
 import java.util.ArrayList;
-//import java.util.Date;
 import java.util.List;
 
 /**
  * Created by emds on 08/01/2017.
  */
 
-public class Profil implements Serializable {
+public class Profil {
 
     // constantes
    /*
@@ -69,6 +64,8 @@ public class Profil implements Serializable {
         liste.add(username) ;
         liste.add(mdp) ;
         liste.add(data) ;
+
+        Log.d("data : ", "************" + liste.get(4).getClass()) ;
         Log.d("JSONArray : ", "************" + new JSONArray(liste)) ;
         return new JSONArray(liste) ;
 

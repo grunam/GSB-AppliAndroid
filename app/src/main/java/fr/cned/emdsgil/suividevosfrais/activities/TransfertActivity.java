@@ -1,7 +1,6 @@
-package fr.cned.emdsgil.suividevosfrais.vue;
+package fr.cned.emdsgil.suividevosfrais.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,11 +19,9 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import fr.cned.emdsgil.suividevosfrais.R;
-import fr.cned.emdsgil.suividevosfrais.outils.Serializer;
-import fr.cned.emdsgil.suividevosfrais.controleur.Controle;
+import fr.cned.emdsgil.suividevosfrais.connexion.ControleAcces;
 
 
 
@@ -38,7 +35,7 @@ public class TransfertActivity extends AppCompatActivity {
     private EditText txtUsername ;
     private EditText txtPassword ;
     private TextView txtStatus ;
-    private Controle controle ;
+    private ControleAcces controleAcces ;
 
 
     @Override
@@ -50,7 +47,7 @@ public class TransfertActivity extends AppCompatActivity {
         txtUsername = (EditText) findViewById(R.id.txtUsername) ;
         txtPassword = (EditText) findViewById(R.id.txtPassword) ;
         txtStatus = (TextView) findViewById(R.id.txtStatus) ;
-        controle = Controle.getInstance(this);
+        controleAcces = ControleAcces.getInstance(this);
 
         cmdTransfertTransferer_clic() ;
     }
@@ -113,7 +110,7 @@ public class TransfertActivity extends AppCompatActivity {
      */
     private void afficheResult(String success, String status, String username, String mdp, List data) {
         // envoi des informations au contrôleur pouir créer le profil
-        controle.creerProfil(success, status, username, mdp, data);
+        controleAcces.creerProfil(success, status, username, mdp, data);
     }
 
     /**
@@ -148,7 +145,7 @@ public class TransfertActivity extends AppCompatActivity {
             List listeFraisHF = new ArrayList() ;
 
             for ( FraisHf unFraisHF : lesFraisHF ) {
-                List listeUnFraisHF = new ArrayList();
+                List listeUnFraisHF = new ArrayList() ;
 
                 Integer jourFraisHF = unFraisHF.getJour() ;
                 listeUnFraisHF.add(jourFraisHF) ;
@@ -184,28 +181,28 @@ public class TransfertActivity extends AppCompatActivity {
     public void recupProfil() {
 
 
-        Log.d("controle.getSuccess()", "************controle.getSuccess() = "+controle.getSuccess());
-        Log.d("controle.getUsername()", "************controle.getUsername() = "+controle.getUsername());
-        Log.d("controle.getMdp()", "************controle.getMdp() = "+controle.getMdp());
-        Log.d("controle.getStatus()", "************controle.getStatus() = "+controle.getStatus());
+        Log.d("controleAcces.getSuccess()", "************controleAcces.getSuccess() = "+controleAcces.getSuccess());
+        Log.d("controleAcces.getUsername()", "************controleAcces.getUsername() = "+controleAcces.getUsername());
+        Log.d("controleAcces.getMdp()", "************controleAcces.getMdp() = "+controleAcces.getMdp());
+        Log.d("controleAcces.getStatus()", "************controleAcces.getStatus() = "+controleAcces.getStatus());
 
 
-        if(controle.getSuccess().equals("1")) {
+        if(controleAcces.getSuccess().equals("1")) {
 
-            //txtUsername.setText(""+controle.getUsername());
-            //txtPassword.setText(""+controle.getMdp());
-            txtStatus.setText("Statut : "+controle.getStatus());
+            //txtUsername.setText(""+controleAcces.getUsername());
+            //txtPassword.setText(""+controleAcces.getMdp());
+            txtStatus.setText("Statut : "+controleAcces.getStatus());
 
             String success = "2";
             String status = "0";
-            String username = controle.getUsername() ;
-            String mdp = controle.getMdp() ;
+            String username = controleAcces.getUsername() ;
+            String mdp = controleAcces.getMdp() ;
             List data =  recupFrais() ;
 
             afficheResult(success, status, username, mdp, data) ;
 
         } else {
-             txtStatus.setText("Statut : "+controle.getStatus());
+             txtStatus.setText("Statut : "+controleAcces.getStatus());
         }
 
     }

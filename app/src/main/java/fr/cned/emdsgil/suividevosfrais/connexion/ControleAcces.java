@@ -1,36 +1,26 @@
-package fr.cned.emdsgil.suividevosfrais.controleur;
+package fr.cned.emdsgil.suividevosfrais.connexion;
 
 import android.content.Context;
 
-import fr.cned.emdsgil.suividevosfrais.modele.AccesDistant;
 //import fr.cned.emdsgil.suividevosfrais.modele.AccesLocal;
-import fr.cned.emdsgil.suividevosfrais.modele.Profil;
 import fr.cned.emdsgil.suividevosfrais.outils.Serializer;
-import fr.cned.emdsgil.suividevosfrais.vue.MainActivity;
 
 import android.util.Log;
 
 
-import fr.cned.emdsgil.suividevosfrais.controleur.Controle;
-import fr.cned.emdsgil.suividevosfrais.outils.AccesHTTP;
-import fr.cned.emdsgil.suividevosfrais.outils.AsyncResponse;
-import fr.cned.emdsgil.suividevosfrais.vue.TransfertActivity;
+import fr.cned.emdsgil.suividevosfrais.activities.TransfertActivity;
 
 
-import org.json.JSONArray;
-
-import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by emds on 08/01/2017.
  */
 
-public final class Controle {
+public final class ControleAcces {
 
     // propriétés
-    private static Controle instance = null ;
+    private static ControleAcces instance = null ;
     private static Profil profil ;
     private static String nomFic = "saveprofil" ;
     //private static AccesLocal accesLocal ;
@@ -40,7 +30,7 @@ public final class Controle {
     /**
      * Constructeur
      */
-    private Controle() {
+    private ControleAcces() {
         super();
     }
 
@@ -48,10 +38,10 @@ public final class Controle {
      * Création de l'instance unique
      * @return
      */
-    public static final Controle getInstance(Context contexte) {
-        if (Controle.instance == null) {
-            Controle.contexte = contexte;
-            Controle.instance = new Controle() ;
+    public static final ControleAcces getInstance(Context contexte) {
+        if (ControleAcces.instance == null) {
+            ControleAcces.contexte = contexte;
+            ControleAcces.instance = new ControleAcces() ;
             //accesLocal = new AccesLocal(contexte);
             /*
             accesDistant = new AccesDistant() ;
@@ -62,7 +52,7 @@ public final class Controle {
             */
             // recupSerialize(contexte);
         }
-        return Controle.instance ;
+        return ControleAcces.instance ;
     }
 
     /**
@@ -95,7 +85,7 @@ public final class Controle {
      * @param profil
      */
     public void setProfil(Profil profil){
-        Controle.profil = profil;
+        ControleAcces.profil = profil;
         Log.d("Profil : ", "************" + profil);
         ((TransfertActivity)contexte).recupProfil();
     }

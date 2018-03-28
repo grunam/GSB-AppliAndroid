@@ -8,7 +8,7 @@
     android:layout_alignParentTop="true"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context="fr.cned.emdsgil.suividevosfrais.vue.NuiteeActivity">
+    tools:context="fr.cned.emdsgil.suividevosfrais.activities.NuiteeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

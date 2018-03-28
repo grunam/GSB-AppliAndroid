@@ -1,4 +1,4 @@
-package fr.cned.emdsgil.suividevosfrais.vue;
+package fr.cned.emdsgil.suividevosfrais.activities;
 
 import java.io.Serializable;
 import java.util.ArrayList;

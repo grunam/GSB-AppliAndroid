@@ -1,8 +1,7 @@
-package fr.cned.emdsgil.suividevosfrais.modele;
+package fr.cned.emdsgil.suividevosfrais.connexion;
 
 import android.util.Log;
 
-import fr.cned.emdsgil.suividevosfrais.controleur.Controle;
 import fr.cned.emdsgil.suividevosfrais.outils.AccesHTTP;
 import fr.cned.emdsgil.suividevosfrais.outils.AsyncResponse;
 
@@ -23,14 +22,14 @@ public class AccesDistant implements AsyncResponse {
 
     // constante
     private static final String SERVERADDR = "http://192.168.1.37/Suividevosfrais/serveurfrais.php";
-    private Controle controle ;
+    private ControleAcces controle ;
 
     /**
      * Constructeur
      */
     public AccesDistant(){
         //super();
-        controle = Controle.getInstance(null);
+        controle = ControleAcces.getInstance(null);
     }
 
 
@@ -48,7 +47,7 @@ public class AccesDistant implements AsyncResponse {
         //Log.d("msg", "************" + message[1]);
 
         if(message.length>1){
-            if(message[0].equals("enreg") || message[0].equals("connexion")){
+            //if(message[0].equals("enreg") || message[0].equals("connexion")){
 
                 // retour suite à un enregistrement distant d'un profil
                 Log.d("retour", "************status="+message[1]) ;
@@ -71,30 +70,13 @@ public class AccesDistant implements AsyncResponse {
 
                 }
 
-             /*
-            }else if(message[0].equals("connexion")){
 
-                // retour suite à la récupération du dernier profil
-                //Log.d("retour", "************dernier="+message[1]);
-                try {
-                    JSONObject info = new JSONObject(message[1]);
-                    // récupération de chaque information du profil
-                    String success = info.getString("success") ;
-                    String status = info.getString("status") ;
-                    String username = info.getString("username") ;
-                    String mdp = info.getString("mdp") ;
-                    List data =  new ArrayList() ;
-
-                    Profil profil = new Profil(success, status, username, mdp, data) ;
-                    // enregistrement du profil dans le controle
-                    controle.setProfil(profil) ;
-                } catch (JSONException e) {
-                    e.printStackTrace() ;
-                }*/
+            /*
             } else if(message[0].equals("Erreur !")){
                 // retour suite à une erreur
                 Log.d("retour", "************erreur="+message[1]);
-            }
+
+            }*/
         }
 
     }
@@ -106,6 +88,7 @@ public class AccesDistant implements AsyncResponse {
      */
     public void envoi(String operation, JSONArray lesDonneesJSON){
 
+        Log.d("opération : ", "************"+operation);
         Log.d("Json : ", "************"+lesDonneesJSON.toString());
 
         AccesHTTP accesDonnees = new AccesHTTP();

@@ -1,4 +1,4 @@
-package fr.cned.emdsgil.suividevosfrais.vue;
+package fr.cned.emdsgil.suividevosfrais.activities;
 
 import android.os.Bundle;
 import android.content.Intent;

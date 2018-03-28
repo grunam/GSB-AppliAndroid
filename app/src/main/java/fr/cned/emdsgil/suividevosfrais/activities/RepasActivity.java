@@ -1,19 +1,18 @@
-package fr.cned.emdsgil.suividevosfrais.vue;
+package fr.cned.emdsgil.suividevosfrais.activities;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.DatePicker.OnDateChangedListener;
-import android.content.Intent;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-
-import android.graphics.Color;
 
 import java.util.Locale;
 
@@ -24,7 +23,7 @@ import fr.cned.emdsgil.suividevosfrais.outils.Serializer;
 // documentation technique pdf TP coach p29
 // tests unitaires pdf TP coach p25
 
-public class KmActivity extends AppCompatActivity {
+public class RepasActivity extends AppCompatActivity {
 
 	/*
 	public Integer getAnnee() {
@@ -48,10 +47,10 @@ public class KmActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_km);
-        setTitle("GSB : Frais Km");
+		setContentView(R.layout.activity_repas);
+        setTitle("GSB : Frais de repas");
 		// modification de l'affichage du DatePicker
-		Global.changeAfficheDate((DatePicker) findViewById(R.id.datKm), false) ;
+		Global.changeAfficheDate((DatePicker) findViewById(R.id.datRepas), false) ;
 		// valorisation des propriétés
 		valoriseProprietes() ;
 		// Empêche la saisie directe des km
@@ -85,13 +84,13 @@ public class KmActivity extends AppCompatActivity {
 	 * Valorisation des propriétés avec les informations affichées
 	 */
 	private void valoriseProprietes() {
-		annee = ((DatePicker)findViewById(R.id.datKm)).getYear() ;
-		mois = ((DatePicker)findViewById(R.id.datKm)).getMonth() + 1 ;
+		annee = ((DatePicker)findViewById(R.id.datRepas)).getYear() ;
+		mois = ((DatePicker)findViewById(R.id.datRepas)).getMonth() + 1 ;
 		// récupération de la qte correspondant au mois actuel
 		qte = 0 ;
 		Integer key = annee*100+mois ;
 		if (Global.listFraisMois.containsKey(key)) {
-			qte = Global.listFraisMois.get(key).getKm() ;
+			qte = Global.listFraisMois.get(key).getRepas() ;
 		}
 		((EditText)findViewById(R.id.txtEtape)).setText(String.format(Locale.FRANCE, "%d", qte)) ;
 	}
@@ -113,7 +112,7 @@ public class KmActivity extends AppCompatActivity {
 	 * Sur la selection de l'image : retour au menu principal
 	 */
     private void imgReturn_clic() {
-    	findViewById(R.id.imgKmReturn).setOnClickListener(new ImageView.OnClickListener() {
+    	findViewById(R.id.imgRepasReturn).setOnClickListener(new ImageView.OnClickListener() {
     		public void onClick(View v) {
     			retourActivityPrincipale() ;    		
     		}
@@ -124,33 +123,33 @@ public class KmActivity extends AppCompatActivity {
      * Sur le clic du bouton valider : sérialisation
      */
     private void cmdValider_clic() {
-    	findViewById(R.id.cmdKmValider).setOnClickListener(new Button.OnClickListener() {
+    	findViewById(R.id.cmdRepasValider).setOnClickListener(new Button.OnClickListener() {
     		public void onClick(View v) {
-    			Serializer.serialize(Global.listFraisMois, KmActivity.this) ;
+    			Serializer.serialize(Global.listFraisMois, RepasActivity.this) ;
     			retourActivityPrincipale() ;    		
     		}
     	}) ;    	
     }
     
     /**
-     * Sur le clic du bouton plus : ajout de 10 dans la quantité
+     * Sur le clic du bouton plus : ajout de 1 dans la quantité
      */
     private void cmdPlus_clic() {
-    	findViewById(R.id.cmdKmPlus).setOnClickListener(new Button.OnClickListener() {
+    	findViewById(R.id.cmdRepasPlus).setOnClickListener(new Button.OnClickListener() {
     		public void onClick(View v) {
-    			qte+=10 ;
+    			qte+=1 ;
     			enregNewQte() ;
     		}
     	}) ;    	
     }
     
     /**
-     * Sur le clic du bouton moins : enlève 10 dans la quantité si c'est possible
+     * Sur le clic du bouton moins : enlève 1 dans la quantité si c'est possible
      */
     private void cmdMoins_clic() {
-    	findViewById(R.id.cmdKmMoins).setOnClickListener(new Button.OnClickListener() {
+    	findViewById(R.id.cmdRepasMoins).setOnClickListener(new Button.OnClickListener() {
     		public void onClick(View v) {
-   				qte = Math.max(0, qte-10) ; // suppression de 10 si possible
+   				qte = Math.max(0, qte-1) ; // suppression de 10 si possible
     			enregNewQte() ;
      		}
     	}) ;    	
@@ -160,7 +159,7 @@ public class KmActivity extends AppCompatActivity {
      * Sur le changement de date : mise à jour de l'affichage de la qte
      */
     private void dat_clic() {   	
-    	final DatePicker uneDate = (DatePicker) findViewById(R.id.datKm);
+    	final DatePicker uneDate = (DatePicker) findViewById(R.id.datRepas);
     	uneDate.init(uneDate.getYear(), uneDate.getMonth(), uneDate.getDayOfMonth(), new OnDateChangedListener(){
 			@Override
 			public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -181,14 +180,14 @@ public class KmActivity extends AppCompatActivity {
 			// creation du mois et de l'annee s'ils n'existent pas déjà
 			Global.listFraisMois.put(key, new FraisMois(annee, mois)) ;
 		}
-		Global.listFraisMois.get(key).setKm(qte) ;		
+		Global.listFraisMois.get(key).setRepas(qte) ;
 	}
 
 	/**
 	 * Retour à l'activité principale (le menu)
 	 */
 	private void retourActivityPrincipale() {
-		Intent intent = new Intent(KmActivity.this, MainActivity.class) ;
+		Intent intent = new Intent(RepasActivity.this, MainActivity.class) ;
 		startActivity(intent) ;   					
 	}
 }

@@ -371,7 +371,26 @@ class PdoGsb
         $requetePrepare->execute();
     }
 	
-	
+	/**
+     * Efface les frais hors forfait de ligneFraisHorsForfait dont
+     * le mois est passé en paramètre
+     *
+     * @param String $mois  mois sous la forme aaaamm
+     *
+     * @return null
+     */
+    public function effacerLesFraisHorsForfait($idVisiteur, $mois)
+    {
+        $requetePrepare = PdoGSB::$monPdo->prepare(
+            'DELETE FROM lignefraishorsforfait '
+            . 'WHERE lignefraishorsforfait.refuse IS NULL '
+            . 'AND lignefraishorsforfait.idvisiteur = :unIdVisiteur '
+            . 'AND lignefraishorsforfait.mois = :unMois' 
+        );
+        $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_INT);
+        $requetePrepare->execute();
+    }
 	
 	
 }	

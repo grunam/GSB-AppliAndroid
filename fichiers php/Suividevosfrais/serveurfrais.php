@@ -1,8 +1,6 @@
 <?php
-
-require_once './class.pdogsb.inc.php';
 require_once './class.utils.inc.php';
-
+require_once './class.pdogsb.inc.php';
 
 $pdo = PdoGsb::getPdoGsb();
 
@@ -52,6 +50,7 @@ if (isset($_REQUEST["operation"])) {
 				$response["status"] = utf8_encode ("authentification réussie !");
 				$response["username"] = $visiteur["login"];
 				$response["mdp"] = $visiteur["mdp"];
+
 				print(json_encode($response));
 			}
 			
@@ -78,13 +77,13 @@ if (isset($_REQUEST["operation"])) {
 			print("enreg%");
 			
 			$lesdonnees = $_REQUEST["lesdonnees"] ;
+			$lesdonnees = utf8_encode($lesdonnees);
 			$donnee = json_decode($lesdonnees) ;
 			$login = $donnee[2] ;
 			$mdp = $donnee[3] ;
 			$data = $donnee[4] ;
-	
+			
 			$pdo = PdoGsb::getPdoGsb();
-			//$cnx = connexionPDO();
 			$response = array();
 			
 			$visiteur = $pdo->getInfosVisiteur($login, $mdp);
@@ -92,7 +91,7 @@ if (isset($_REQUEST["operation"])) {
 			if (is_array($visiteur)) {
 			
 				////[mois, nbEtape, nbKm, nbNuitee, nbRepas, [[jourFraisHF, montantFraisHF, motifFraisHF], [jourFraisHF, montantFraisHF, motifFraisHF]]]
-				echo json_encode($data);
+				
 				$mois = $data[0];
 				$nbEtape = $data[1];
 				$nbKm = $data[2];
@@ -105,33 +104,38 @@ if (isset($_REQUEST["operation"])) {
 					$pdo->creeNouvellesLignesFrais($visiteur["id"], $mois);
 					
 				}	
-				$lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
+				$lesFraisForfait = $pdo->getLesFraisForfait($visiteur["id"], $mois);
 				$lesFrais = array(); 
 				$i = 1;
 				foreach ($lesFraisForfait as $unFraisForfait) {
 					$idFrais = $unFraisForfait['idfrais'];
-					$lesFrais[$idFrais] = $unFraisForfait['quantite']+$data[$i];
+					$lesFrais[$idFrais] = $data[$i];
 					$i++;
 				}
-				$pdo->majFraisForfait($visiteur["id"], $mois, $lesFrais) ;
+				$pdo->majFraisForfait($visiteur["id"], $mois, $lesFrais);
+				
+				$pdo->effacerLesFraisHorsForfait($visiteur["id"], $mois);
 				
 				foreach ($fraisHF as $unFraisHF) {
 					$date = strval($mois).strval($unFraisHF[0]);
-					$pdo->creeNouveauFraisHorsForfait($visiteur["id"], $mois, $unFraisHF[2], Utils::dateAnglaisCompactVersFrançais($date), $unFraisHF[1]);
+					$dateEn = Utils::dateAnglaisNonCompact($date);
+					$pdo->creeNouveauFraisHorsForfait($visiteur["id"], $mois, $unFraisHF[2], $dateEn, $unFraisHF[1]);
 				}
 					
 				$response["success"] = "2";
-				$response["status"] = utf8_encode ("transfert réussi !");
+				$response["status"] = utf8_encode("transfert réussi !");
 				$response["username"] = $visiteur["login"];
 				$response["mdp"] = $visiteur["mdp"];
 				print(json_encode($response));
+				
+				
 			}
 			
 			
 		// capture d'erreur d'accès à la base de données
 		} catch (PDOException $e) {
 			$response["success"] = "0";
-			$response["status"] = "Erreur !" . $e->getMessage();
+			$response["status"] = "erreur !" ;
 			$response["username"] = "";
 			$response["mdp"] = "";
 			print(json_encode($response));

@@ -179,18 +179,20 @@ class Utils
      *
      * @param String $date date au format aaaammjj
      *
-     * @return String date au format jj/mm/aaaa
+     * @return String date au format aaaa-mm-jj
      *
-     * @assert ('200701') == '200612'
-     * @assert ('201712') == '201711'
+     * @assert ('20070122') == '2007-01-22'
+     * @assert ('20171209') == '2017-12-09'
      */
-    public static function dateAnglaisCompactVersFrançais($dateMois)
+    public static function dateAnglaisNonCompact($dateMois)
     {
-        $annee = substr($dateMois, 0, 4);
+		
+		$annee = substr($dateMois, 0, 4);
         $mois = substr($dateMois, 4, 2);
         $jour = substr($dateMois, 6, 2);
+        $date =  $annee . "-" . $mois . "-" . $jour;
+		return $date;
 		
-        return $jour.'/'.$mois.'/'.$annee;
     }
 
     /**

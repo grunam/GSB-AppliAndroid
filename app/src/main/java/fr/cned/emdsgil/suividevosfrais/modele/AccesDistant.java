@@ -22,7 +22,7 @@ import java.util.List;
 public class AccesDistant implements AsyncResponse {
 
     // constante
-    private static final String SERVERADDR = "http://192.168.1.37/Suividevosfrais/serveurfrais.php";
+    private static final String SERVERADDR = "http://192.168.1.41/Suividevosfrais/serveurfrais.php";
     private Controle controle ;
 
     /**

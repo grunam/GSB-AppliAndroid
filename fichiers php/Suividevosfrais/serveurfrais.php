@@ -1,10 +1,10 @@
 <?php
-//include "fonctions.php";
+require_once './class.utils.inc.php';
 require_once './class.pdogsb.inc.php';
 
+$pdo = PdoGsb::getPdoGsb();
 
 /*
-$pdo = PdoGsb::getPdoGsb();
 $visiteur = $pdo->getInfosVisiteur("dandre", "oppg5");
 print_r(json_encode($visiteur));
 echo "<br>";
@@ -50,81 +50,100 @@ if (isset($_REQUEST["operation"])) {
 				$response["status"] = utf8_encode ("authentification réussie !");
 				$response["username"] = $visiteur["login"];
 				$response["mdp"] = $visiteur["mdp"];
+
 				print(json_encode($response));
 			}
-			/*
-			$req = $cnx->prepare("select * from visiteurs where ");
-			$req->execute();
-			*/
-			// s'il y a un profil, on récupère le premier
-			/*
-			if ($ligne = $req->fetch(PDO::FETCH_ASSOC)){
-				print(json_encode($ligne));
-			}
-			*/
 			
 		// capture d'erreur d'accès à la base de données
 		} catch (PDOException $e) {
 			$response["success"] = "0";
-			$response["status"] = $e->getMessage();
+			$response["status"] = "Erreur !" . $e->getMessage();
 			$response["username"] = "";
 			$response["mdp"] = "";
 			print(json_encode($response));
-			print "Erreur !" . $e->getMessage();
-			die();
+			//print "Erreur !" . $e->getMessage();
+			//die();
 		}
 
 	
 	
-	/*
-	// demande de récupération du dernier profil enregistré
-	if ($_REQUEST["operation"]=="dernier") {
-
-		try {
-			// création d'un curseur pour récupérer les profils
-			print("dernier%");
-			$cnx = connexionPDO();
-			$req = $cnx->prepare("select * from profil order by datemesure desc");
-			$req->execute();
-		  
-			// s'il y a un profil, on récupère le premier
-			if ($ligne = $req->fetch(PDO::FETCH_ASSOC)){
-				print(json_encode($ligne));
-			}
-
-		// capture d'erreur d'accès à la base de données
-		} catch (PDOException $e) {
-			print "Erreur !" . $e->getMessage();
-			die();
-		}
-	*/
+	
+	
 	// enregistrement dans la table profil du profil reçu
 	}elseif ($_REQUEST["operation"]=="enreg") {
-		
-		// récupération des données en post
-		$lesdonnees = $_REQUEST["lesdonnees"] ;
-		$donnee = json_decode($lesdonnees) ;
-		$datemesure = $donnee[0] ;
-		$poids = $donnee[1] ;
-		$taille = $donnee[2] ;
-		$age = $donnee[3] ;
-		$sexe = $donnee[4] ;
-		// insertion dans la base de données
+			
 		try {
-			print ("enreg%") ;
-			$cnx = connexionPDO();
-			$larequete = "insert into profil (datemesure, poids, taille, age, sexe)" ;
-			$larequete .= " values (\"$datemesure\", $poids, $taille, $age, $sexe)" ;
-			print ($larequete);
-			$req = $cnx->prepare($larequete);
-			$req->execute();
+			// création d'un curseur pour récupérer les profils
+			print("enreg%");
+			
+			$lesdonnees = $_REQUEST["lesdonnees"] ;
+			$lesdonnees = utf8_encode($lesdonnees);
+			$donnee = json_decode($lesdonnees) ;
+			$login = $donnee[2] ;
+			$mdp = $donnee[3] ;
+			$data = $donnee[4] ;
+			
+			$pdo = PdoGsb::getPdoGsb();
+			$response = array();
+			
+			$visiteur = $pdo->getInfosVisiteur($login, $mdp);
+			
+			if (is_array($visiteur)) {
+			
+				////[mois, nbEtape, nbKm, nbNuitee, nbRepas, [[jourFraisHF, montantFraisHF, motifFraisHF], [jourFraisHF, montantFraisHF, motifFraisHF]]]
+				
+				$mois = $data[0];
+				$nbEtape = $data[1];
+				$nbKm = $data[2];
+				$nbNuitee = $data[3];
+				$nbRepas = $data[4];
+				$fraisHF = $data[5];
+				
+				if($pdo->estPremierFraisMois($visiteur["id"], $mois)){
+					
+					$pdo->creeNouvellesLignesFrais($visiteur["id"], $mois);
+					
+				}	
+				$lesFraisForfait = $pdo->getLesFraisForfait($visiteur["id"], $mois);
+				$lesFrais = array(); 
+				$i = 1;
+				foreach ($lesFraisForfait as $unFraisForfait) {
+					$idFrais = $unFraisForfait['idfrais'];
+					$lesFrais[$idFrais] = $data[$i];
+					$i++;
+				}
+				$pdo->majFraisForfait($visiteur["id"], $mois, $lesFrais);
+				
+				$pdo->effacerLesFraisHorsForfait($visiteur["id"], $mois);
+				
+				foreach ($fraisHF as $unFraisHF) {
+					$date = strval($mois).strval($unFraisHF[0]);
+					$dateEn = Utils::dateAnglaisNonCompact($date);
+					$pdo->creeNouveauFraisHorsForfait($visiteur["id"], $mois, $unFraisHF[2], $dateEn, $unFraisHF[1]);
+				}
+					
+				$response["success"] = "2";
+				$response["status"] = utf8_encode("transfert réussi !");
+				$response["username"] = $visiteur["login"];
+				$response["mdp"] = $visiteur["mdp"];
+				print(json_encode($response));
+				
+				
+			}
+			
 			
 		// capture d'erreur d'accès à la base de données
 		} catch (PDOException $e) {
-			print "Erreur !" . $e->getMessage();
-			die();
-		}
-
+			$response["success"] = "0";
+			$response["status"] = "erreur !" ;
+			$response["username"] = "";
+			$response["mdp"] = "";
+			print(json_encode($response));
+			//print "Erreur !" . $e->getMessage();
+			//die();
+		}	
+			
+		
 	}
 
 }

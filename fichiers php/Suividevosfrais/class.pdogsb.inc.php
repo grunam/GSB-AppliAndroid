@@ -398,6 +398,71 @@ class PdoGsb
     }
 	
 	/**
+     * Retourne les informations d'une fiche de frais d'un visiteur pour un
+     * mois donné
+     *
+     * @param String $idVisiteur id du visiteur
+     * @param String $mois       mois sous la forme aaaamm
+     *
+     * @return Array un tableau avec des champs de jointure entre une fiche de frais
+     *         et la ligne d'état
+     *
+     * @assert ('a131', '201612') == Array ( 'idEtat' => 'RB', 'dateModif' => '2017-02-01', 'nbJustificatifs' => '0', 'montantValide' => '5545.91', 'libEtat' => 'Remboursée', 0 => 'RB', 1 => '2017-02-01', 2 => '0', 3 => '5545.91', 4 => 'Remboursée' )
+     * @assert ('a131', '201612') != Array ( 'idEtat' => 'CL', 'dateModif' => '2017-02-01', 'nbJustificatifs' => '0', 'montantValide' => '5545.91', 'libEtat' => 'Remboursée', 0 => 'RB', 1 => '2017-02-01', 2 => '0', 3 => '5545.91', 4 => 'Remboursée' )
+     * @assert ('a131', '201612') != Array ()
+     * @assert ('a131', '201612') != NULL
+     *
+     */
+    public function getLesInfosFicheFrais($idVisiteur, $mois)
+    {
+        $requetePrepare = PdoGSB::$monPdo->prepare(
+            'SELECT fichefrais.idetat as idEtat, '
+            . 'fichefrais.datemodif as dateModif, '
+            . 'fichefrais.nbjustificatifs as nbJustificatifs, '
+            . 'fichefrais.montantvalide as montantValide, '
+            . 'etat.libelle as libEtat '
+            . 'FROM fichefrais '
+            . 'INNER JOIN etat ON fichefrais.idetat = etat.id '
+            . 'WHERE fichefrais.idvisiteur = :unIdVisiteur '
+            . 'AND fichefrais.mois = :unMois'
+        );
+        $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
+        $requetePrepare->execute();
+        $laLigne = $requetePrepare->fetch();
+        return $laLigne;
+    }
+	
+	/**
+     * Modifie l'état et la date de modification d'une fiche de frais.
+     * Modifie le champ idEtat et met la date de modif à aujourd'hui.
+     *
+     * @param String  $idVisiteur      id du visiteur
+     * @param String  $mois            mois sous la forme aaaamm
+     * @param String  $etat            nouvel état de la fiche de frais
+     * @param Boolean $nbJustificatif  paramètre optionnel nombre de justificatifs
+     * 
+     * @return null
+     */
+    public function majEtatFicheFrais($idVisiteur, $mois, $etat, $nbJustificatif = false)
+    {
+        $req = 'UPDATE fichefrais SET idetat = :unEtat, datemodif = now() ';
+        if ($nbJustificatif) {
+            $req .=  ', nbjustificatifs = :unNbJustificatifs ';
+        }
+        $req .= 'WHERE fichefrais.idvisiteur = :unIdVisiteur '
+        . 'AND fichefrais.mois = :unMois';
+        $requetePrepare = PdoGSB::$monPdo->prepare($req);
+        $requetePrepare->bindParam(':unEtat', $etat, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
+        if ($nbJustificatif) {
+            $requetePrepare->bindParam(':unNbJustificatifs', $nbJustificatif, PDO::PARAM_STR);
+        }
+        $requetePrepare->execute();
+    }
+	
+	/**
      * Efface les frais hors forfait de ligneFraisHorsForfait dont
      * le mois est passé en paramètre
      *

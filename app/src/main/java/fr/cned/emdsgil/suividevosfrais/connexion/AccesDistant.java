@@ -21,12 +21,13 @@ import java.util.List;
 public class AccesDistant implements AsyncResponse {
 
     // constante
-    private static final String SERVERADDR = "http://192.168.1.37/Suividevosfrais/serveurfrais.php";
+    private static final String SERVERADDR = "http://192.168.1.40/Suividevosfrais/serveurfrais.php";
     private ControleAcces controle ;
 
     /**
      * Constructeur
      */
+
     public AccesDistant(){
         //super();
         controle = ControleAcces.getInstance(null);
@@ -98,7 +99,6 @@ public class AccesDistant implements AsyncResponse {
         accesDonnees.addParam("operation", operation);
         accesDonnees.addParam("lesdonnees", lesDonneesJSON.toString());
         // appel du serveur
-
 
 
         accesDonnees.execute(SERVERADDR);

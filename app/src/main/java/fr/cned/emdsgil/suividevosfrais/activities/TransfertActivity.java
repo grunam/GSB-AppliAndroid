@@ -23,13 +23,7 @@ import java.util.List;
 import fr.cned.emdsgil.suividevosfrais.R;
 import fr.cned.emdsgil.suividevosfrais.connexion.ControleAcces;
 
-
-
-// documentation technique pdf TP coach p29
-// tests unitaires pdf TP coach p25
-
 public class TransfertActivity extends AppCompatActivity {
-
 
     // propriétés
     private EditText txtUsername ;
@@ -37,18 +31,15 @@ public class TransfertActivity extends AppCompatActivity {
     private TextView txtStatus ;
     private ControleAcces controleAcces ;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfert);
         setTitle("GSB : Transfert des données");
-
-        txtUsername = (EditText) findViewById(R.id.txtUsername) ;
-        txtPassword = (EditText) findViewById(R.id.txtPassword) ;
-        txtStatus = (TextView) findViewById(R.id.txtStatus) ;
+        txtUsername = findViewById(R.id.txtUsername) ;
+        txtPassword = findViewById(R.id.txtPassword) ;
+        txtStatus = findViewById(R.id.txtStatus) ;
         controleAcces = ControleAcces.getInstance(this);
-
         cmdTransfertTransferer_clic() ;
     }
 
@@ -68,22 +59,18 @@ public class TransfertActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     /**
      * Sur le clic du bouton ajouter : enregistrement dans la liste et sérialisation
      */
     private void cmdTransfertTransferer_clic() {
-
         findViewById(R.id.cmdTransfertTransferer).setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
-
                 String success = "0";
                 String status = "0";
                 String username = "" ;
                 String mdp = "" ;
                 List data = new ArrayList() ;
-
                 try {
                     username = txtUsername.getText().toString() ;
                     mdp = txtPassword.getText().toString();
@@ -95,11 +82,9 @@ public class TransfertActivity extends AppCompatActivity {
                 }else{
                     afficheResult(success, status, username, mdp, data) ;
                 }
-
             }
         }) ;
     }
-
 
     /**
      * Affiche le résultat des mesures (image et img)
@@ -117,20 +102,17 @@ public class TransfertActivity extends AppCompatActivity {
      * Récupération des frais du mois courant
      */
     public List recupFrais() {
-
         Calendar cal = Calendar.getInstance() ;
         Integer currentMonth = cal.get(Calendar.MONTH)+1 ;
         Integer currentYear = cal.get(Calendar.YEAR) ;
         Integer key = currentYear*100+currentMonth ;
         ArrayList<FraisHf> lesFraisHF ;
         List listeFrais = new ArrayList() ;
-
         Log.d("date", "************date = "+key) ;
         //[nbEtape, nbKm, nbNuitee, nbRepas,[]]
         if (Global.listFraisMois.containsKey(key)) {
-            // frais forfaitaire
-            Integer mois = key ;
-            listeFrais.add(mois) ;
+            // frais forfaitaires
+            listeFrais.add(key) ;
             Integer nbEtape = Global.listFraisMois.get(key).getEtape() ;
             listeFrais.add(nbEtape) ;
             Integer nbKm = Global.listFraisMois.get(key).getKm() ;
@@ -139,38 +121,24 @@ public class TransfertActivity extends AppCompatActivity {
             listeFrais.add(nbNuitee) ;
             Integer nbRepas = Global.listFraisMois.get(key).getRepas() ;
             listeFrais.add(nbRepas) ;
-
-
             lesFraisHF = Global.listFraisMois.get(key).getLesFraisHf() ;
             List listeFraisHF = new ArrayList() ;
-
             for ( FraisHf unFraisHF : lesFraisHF ) {
                 List listeUnFraisHF = new ArrayList() ;
-
                 Integer jourFraisHF = unFraisHF.getJour() ;
                 listeUnFraisHF.add(jourFraisHF) ;
                 Float montantFraisHF = unFraisHF.getMontant() ;
                 listeUnFraisHF.add(montantFraisHF) ;
                 String motifFraisHF = unFraisHF.getMotif() ;
                 listeUnFraisHF.add(motifFraisHF) ;
-
                 listeFraisHF.add(listeUnFraisHF) ;
-
-                //listeFraisHF.add(unFraisHF) ;
-
             }
-
-
             //[mois, nbEtape, nbKm, nbNuitee, nbRepas, [[jourFraisHF, montantFraisHF, motifFraisHF], [jourFraisHF, montantFraisHF, motifFraisHF]]]
             Log.d("listeFraisHF", "************listeFraisHF = "+new JSONArray(listeFraisHF)) ;
-            Log.d("fraisHF", "************fraisHF = "+new JSONArray((List)Global.listFraisMois.get(key).getLesFraisHf())) ;
+            Log.d("fraisHF", "************fraisHF = "+new JSONArray(Global.listFraisMois.get(key).getLesFraisHf())) ;
             listeFrais.add(listeFraisHF) ;
-
         }
-
         Log.d("listeFrais", "************listeFrais = "+new JSONArray(listeFrais)) ;
-
-
         return listeFrais ;
     }
 
@@ -179,34 +147,24 @@ public class TransfertActivity extends AppCompatActivity {
      * Récupération d'un profil sérialisé
      */
     public void recupProfil() {
-
-
         Log.d("controleAcces.getSuccess()", "************controleAcces.getSuccess() = "+controleAcces.getSuccess());
         Log.d("controleAcces.getUsername()", "************controleAcces.getUsername() = "+controleAcces.getUsername());
         Log.d("controleAcces.getMdp()", "************controleAcces.getMdp() = "+controleAcces.getMdp());
         Log.d("controleAcces.getStatus()", "************controleAcces.getStatus() = "+controleAcces.getStatus());
-
-
         if(controleAcces.getSuccess().equals("1")) {
-
-            //txtUsername.setText(""+controleAcces.getUsername());
-            //txtPassword.setText(""+controleAcces.getMdp());
-            txtStatus.setText("Statut : "+controleAcces.getStatus());
-
+            String msg = "Statut : "+controleAcces.getStatus();
+            txtStatus.setText(msg);
             String success = "2";
             String status = "0";
             String username = controleAcces.getUsername() ;
             String mdp = controleAcces.getMdp() ;
             List data =  recupFrais() ;
-
             afficheResult(success, status, username, mdp, data) ;
-
         } else {
-             txtStatus.setText("Statut : "+controleAcces.getStatus());
+             String msg = "Statut : "+controleAcces.getStatus();
+             txtStatus.setText(msg);
         }
-
     }
-
 
     /**
      * Sur la selection de l'image : retour au menu principal

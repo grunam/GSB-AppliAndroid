@@ -51,7 +51,7 @@ public class TransfertActivity extends AppCompatActivity {
         cmdTransfertTransferer_clic() ;
     }
 
-
+    /*
     @Override
     protected void onStart()
     {
@@ -60,6 +60,7 @@ public class TransfertActivity extends AppCompatActivity {
         txtStatus = findViewById(R.id.txtStatus) ;
         txtStatus.setText(msg);
     }
+    */
 
     /**
      * Création du menu avec des items
@@ -96,8 +97,6 @@ public class TransfertActivity extends AppCompatActivity {
         findViewById(R.id.cmdTransfertTransferer).setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
-                String msg = "Statut : connexion en cours";
-                txtStatus.setText(msg);
                 String success = "0";
                 String status = "0";
                 String username = "" ;
@@ -184,7 +183,8 @@ public class TransfertActivity extends AppCompatActivity {
         Log.d("controleAcces.getUsername()", "************controleAcces.getUsername() = "+controleAcces.getUsername());
         Log.d("controleAcces.getMdp()", "************controleAcces.getMdp() = "+controleAcces.getMdp());
         Log.d("controleAcces.getStatus()", "************controleAcces.getStatus() = "+controleAcces.getStatus());
-        if(controleAcces.getSuccess().equals("1")) {
+        //txtStatus = findViewById(R.id.txtStatus) ;
+        if(controleAcces.getSuccess().toString().equals("1")) {
             String msg = "Statut : "+controleAcces.getStatus();
             txtStatus.setText(msg);
             String success = "2";
@@ -194,8 +194,11 @@ public class TransfertActivity extends AppCompatActivity {
             List data =  recupFrais() ;
             afficheResult(success, status, username, mdp, data) ;
         } else {
-             String msg = "Statut : "+controleAcces.getStatus();
-             txtStatus.setText(msg);
+
+            String msg = "Statut : "+controleAcces.getStatus();
+            Log.d("test final", "************ Test Final = "+msg);
+            //txtStatus = findViewById(R.id.txtStatus) ;
+            txtStatus.setText(msg);
         }
     }
 

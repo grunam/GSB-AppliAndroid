@@ -23,6 +23,9 @@ import java.util.List;
 import fr.cned.emdsgil.suividevosfrais.R;
 import fr.cned.emdsgil.suividevosfrais.connexion.ControleAcces;
 
+/**
+ * Classe pour gérer l'activity "TransfertActivity"
+ */
 public class TransfertActivity extends AppCompatActivity {
 
     // propriétés
@@ -31,6 +34,11 @@ public class TransfertActivity extends AppCompatActivity {
     private TextView txtStatus ;
     private ControleAcces controleAcces ;
 
+    /**
+     * Initialisation de l'activity
+     *
+     * @param savedInstanceState l'activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +51,12 @@ public class TransfertActivity extends AppCompatActivity {
         cmdTransfertTransferer_clic() ;
     }
 
+    /**
+     * Création du menu avec des items
+     *
+     * @param menu objet menu à remplir
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -51,6 +65,12 @@ public class TransfertActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Définitiion des actions sur le menu
+     *
+     * @param item item du menu
+     * @return l'appel à la fonction du même nom de la classe mère
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getTitle().equals(getString(R.string.retour_accueil))) {
@@ -87,11 +107,12 @@ public class TransfertActivity extends AppCompatActivity {
     }
 
     /**
-     * Affiche le résultat des mesures (image et img)
-     * @param success
-     * @param status
-     * @param username
-     * @param mdp
+     * Affiche le résultat de la connexion
+     * @param success la nature de la connexion
+     * @param status message renvoyé par le serveur
+     * @param username usename utilisé et confimé pour la connexion
+     * @param mdp mot de passe utilisé et confimé pour la connexion
+     * @param data données pour la connexion
      */
     private void afficheResult(String success, String status, String username, String mdp, List data) {
         // envoi des informations au contrôleur pouir créer le profil
@@ -99,7 +120,7 @@ public class TransfertActivity extends AppCompatActivity {
     }
 
     /**
-     * Récupération des frais du mois courant
+     * Récupération des frais (forfaitaires et hors forfait) du mois courant
      */
     public List recupFrais() {
         Calendar cal = Calendar.getInstance() ;
@@ -144,7 +165,7 @@ public class TransfertActivity extends AppCompatActivity {
 
 
     /**
-     * Récupération d'un profil sérialisé
+     * Récupération d'un profil de connexion
      */
     public void recupProfil() {
         Log.d("controleAcces.getSuccess()", "************controleAcces.getSuccess() = "+controleAcces.getSuccess());
@@ -176,7 +197,6 @@ public class TransfertActivity extends AppCompatActivity {
             }
         }) ;
     }
-
 
     /**
      * Retour à l'activité principale (le menu)

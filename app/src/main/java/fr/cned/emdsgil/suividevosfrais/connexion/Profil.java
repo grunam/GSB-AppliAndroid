@@ -7,18 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by emds on 08/01/2017.
+ * Classe pour créer un profil de connexion
  */
-
 public class Profil {
-
-    // constantes
-   /*
-    private static final Integer minFemme = 15; // maigre si en dessous
-    private static final Integer maxFemme = 30; // gros si au dessus
-    private static final Integer minHomme = 10; // maigre si en dessous
-    private static final Integer maxHomme = 25; // gros si au dessus
-    */
 
     // propriétés
     private String success ;
@@ -27,14 +18,14 @@ public class Profil {
     private String mdp ;
     private List data ;
 
-
     /**
-     * Constructeur
-     * @param success
-     * @param status
-     * @param username
-     * @param mdp
-     * @param data
+     * Constructeur pour créer un profil de connexion
+     *
+     * @param success la nature de la connexion
+     * @param status message renvoyé par le serveur
+     * @param username usename utilisé et confimé pour la connexion
+     * @param mdp mot de passe utilisé et confimé pour la connexion
+     * @param data données pour la connexion
      */
     public Profil(String success, String status, String username, String mdp, List data) {
 
@@ -55,7 +46,8 @@ public class Profil {
 
     /**
      * Conversion du profil au format json
-     * @return
+     *
+     * @return un objet JSON d'un profil de connexion
      */
     public JSONArray convertToJSONArray(){
         List liste = new ArrayList() ;
@@ -71,22 +63,47 @@ public class Profil {
 
     }
 
+    /**
+     * Récupération du succès
+     *
+     * @return la valeur de la propriété succes
+     */
     public String getSuccess() {
         return success;
     }
 
+    /**
+     * Récupération du statut de la connexion
+     *
+     * @return la valeur de la propriété status
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * Récupération de l'username
+     *
+     * @return la valeur de la propriété username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Récupération du mdp
+     *
+     * @return la valeur de la propriété mdp
+     */
     public String getMdp() {
         return mdp;
     }
 
+    /**
+     * Récupération des données de connexion
+     *
+     * @return la valeur de la propriété data
+     */
     public List getData() {
         return data;
     }

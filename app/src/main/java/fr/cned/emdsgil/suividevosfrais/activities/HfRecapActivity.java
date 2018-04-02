@@ -16,8 +16,16 @@ import java.util.ArrayList;
 
 import fr.cned.emdsgil.suividevosfrais.R;
 
+/**
+ * Classe pour gérer l'activity "HfRecapActivity"
+ */
 public class HfRecapActivity extends AppCompatActivity {
 
+	/**
+	 * Initialisation de l'activity
+	 *
+	 * @param savedInstanceState l'activity
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,6 +40,12 @@ public class HfRecapActivity extends AppCompatActivity {
 		dat_clic() ;
 	}
 
+	/**
+	 * Création du menu avec des items
+	 *
+	 * @param menu objet menu à remplir
+	 * @return true
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -40,6 +54,12 @@ public class HfRecapActivity extends AppCompatActivity {
 		return true;
 	}
 
+	/**
+	 * Définitiion des actions sur le menu
+	 *
+	 * @param item item du menu
+	 * @return l'appel à la fonction du même nom de la classe mère
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getTitle().equals(getString(R.string.retour_accueil))) {
@@ -68,8 +88,6 @@ public class HfRecapActivity extends AppCompatActivity {
 			// insertion dans la listview
 		}
 		ListView listView = (ListView) findViewById(R.id.lstHfRecap);
-
-
 
 		//String str = Arrays.toString(liste.toArray());
 		//Log.d("liste : ", "************" + new JSONArray(liste));
@@ -101,8 +119,6 @@ public class HfRecapActivity extends AppCompatActivity {
 			}
     	});       	
     }
-    
-    
 
 	/**
 	 * Retour à l'activité principale (le menu)

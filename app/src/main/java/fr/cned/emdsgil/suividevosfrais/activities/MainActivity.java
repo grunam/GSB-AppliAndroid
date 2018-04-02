@@ -14,8 +14,16 @@ import java.util.Hashtable;
 import fr.cned.emdsgil.suividevosfrais.R;
 import fr.cned.emdsgil.suividevosfrais.outils.Serializer;
 
+/**
+ * Classe pour gérer l'activity "MainActivity"
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Initialisation de l'activity
+     *
+     * @param savedInstanceState l'activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
         //cmdTransfert_clic();
     }
 
+    /**
+     * Création du menu avec des items
+     *
+     * @param menu objet menu à remplir
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

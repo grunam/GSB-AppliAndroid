@@ -15,9 +15,8 @@ import java.util.List;
 
 
 /**
- * Created by emds on 12/01/2017.
+ * Classe pour gérer l'envoi vers le serveur des informations et la réception des informations du serveur
  */
-
 public class AccesDistant implements AsyncResponse {
 
     // constante
@@ -25,14 +24,13 @@ public class AccesDistant implements AsyncResponse {
     private ControleAcces controle ;
 
     /**
-     * Constructeur
+     * Constructeur pour gérer l'envoi vers le serveur des informations et la réception des informations du serveur
+     * récupère l'instance de la classe ControleAcces
      */
-
     public AccesDistant(){
         //super();
         controle = ControleAcces.getInstance(null);
     }
-
 
     /**
      * Traitement des informations qui viennent du serveur distant
@@ -46,11 +44,7 @@ public class AccesDistant implements AsyncResponse {
         String[] message = output.split("%") ;
         // contrôle si le serveur a retourné une information
         //Log.d("msg", "************" + message[1]);
-
         if(message.length>1){
-            //if(message[0].equals("enreg") || message[0].equals("connexion")){
-
-                // retour suite à un enregistrement distant d'un profil
                 Log.d("retour", "************status="+message[1]) ;
                 try {
                     JSONObject info = new JSONObject(message[1]);
@@ -60,32 +54,19 @@ public class AccesDistant implements AsyncResponse {
                     String username = info.getString("username");
                     String mdp = info.getString("mdp");
                     List data = new ArrayList();
-
                     Profil profil = new Profil(success, status, username, mdp, data);
                     // enregistrement du profil dans le controle
                     controle.setProfil(profil);
-
                 } catch (JSONException e) {
-
                     e.printStackTrace() ;
-
                 }
-
-
-            /*
-            } else if(message[0].equals("Erreur !")){
-                // retour suite à une erreur
-                Log.d("retour", "************erreur="+message[1]);
-
-            }*/
         }
-
     }
 
     /**
      * Envoi d'informations vers le serveur distant
-     * @param operation
-     * @param lesDonneesJSON
+     * @param operation opération éxécutée sur leserveur distant (connexion ou enregistrement)
+     * @param lesDonneesJSON les données envoyées au serveur
      */
     public void envoi(String operation, JSONArray lesDonneesJSON){
 
@@ -99,7 +80,6 @@ public class AccesDistant implements AsyncResponse {
         accesDonnees.addParam("operation", operation);
         accesDonnees.addParam("lesdonnees", lesDonneesJSON.toString());
         // appel du serveur
-
 
         accesDonnees.execute(SERVERADDR);
     }

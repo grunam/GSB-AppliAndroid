@@ -1,7 +1,7 @@
 package fr.cned.emdsgil.suividevosfrais.outils;
 
 /**
- * Created by emds on 07/08/2015.
+ * Interface de redéfinition de la méthode processFinish
  */
 public interface AsyncResponse {
     void processFinish(String output);

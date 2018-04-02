@@ -20,9 +20,9 @@ import fr.cned.emdsgil.suividevosfrais.R;
 import fr.cned.emdsgil.suividevosfrais.outils.Serializer;
 
 
-// documentation technique pdf TP coach p29
-// tests unitaires pdf TP coach p25
-
+/**
+ * Classe pour gérer l'activity "NuiteeActivity"
+ */
 public class NuiteeActivity extends AppCompatActivity {
 
 	// informations affichées dans l'activité
@@ -30,6 +30,11 @@ public class NuiteeActivity extends AppCompatActivity {
 	private Integer mois ;
 	private Integer qte ;
 
+	/**
+	 * Initialisation de l'activity
+	 *
+	 * @param savedInstanceState l'activity
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,6 +54,12 @@ public class NuiteeActivity extends AppCompatActivity {
 		dat_clic() ;
 	}
 
+	/**
+	 * Création du menu avec des items
+	 *
+	 * @param menu objet menu à remplir
+	 * @return true
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -57,6 +68,12 @@ public class NuiteeActivity extends AppCompatActivity {
 		return true;
 	}
 
+	/**
+	 * Définitiion des actions sur le menu
+	 *
+	 * @param item item du menu
+	 * @return l'appel à la fonction du même nom de la classe mère
+	 */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getTitle().equals(getString(R.string.retour_accueil))) {

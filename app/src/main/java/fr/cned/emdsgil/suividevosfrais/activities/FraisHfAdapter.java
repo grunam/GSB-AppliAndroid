@@ -15,7 +15,9 @@ import java.util.Locale;
 import fr.cned.emdsgil.suividevosfrais.R;
 import fr.cned.emdsgil.suividevosfrais.outils.Serializer;
 
-
+/**
+ * Classe pour gérer les éléments de la liste des frais hors forfait
+ */
 class FraisHfAdapter extends BaseAdapter {
 
 	private final ArrayList<FraisHf> lesFrais ; // liste des frais du mois
@@ -36,6 +38,8 @@ class FraisHfAdapter extends BaseAdapter {
 	
 	/**
 	 * retourne le nombre d'éléments de la listview
+	 *
+	 * @return le nombre d'éléments
 	 */
 	@Override
 	public int getCount() {
@@ -44,6 +48,8 @@ class FraisHfAdapter extends BaseAdapter {
 
 	/**
 	 * retourne l'item de la listview à un index précis
+	 *
+	 * @return l'item
 	 */
 	@Override
 	public Object getItem(int index) {
@@ -52,6 +58,8 @@ class FraisHfAdapter extends BaseAdapter {
 
 	/**
 	 * retourne l'index de l'élément actuel
+	 *
+	 * @return l'index
 	 */
 	@Override
 	public long getItemId(int index) {
@@ -71,7 +79,6 @@ class FraisHfAdapter extends BaseAdapter {
 	/**
 	 * Affichage dans la liste
 	 */
-
 	@Override
 	public View getView(final int index, View convertView, ViewGroup parent) {
 		ViewHolder holder ;

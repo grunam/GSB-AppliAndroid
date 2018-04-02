@@ -26,14 +26,30 @@ public class AccesHTTP extends AsyncTask<String, Integer, Long> {
 	private ArrayList<NameValuePair> parametres;
 	public AsyncResponse delegate=null;
 
+	/**
+	 * Constructeur affecte à la propriété parametres un nouvel ArrayList
+	 *
+	 */
 	public AccesHTTP(){
 		parametres = new ArrayList<NameValuePair>();
 	}
-	
+
+	/**
+	 * Ajoute des paramètres à la propriété parametres
+	 *
+	 * @param nom nom du paramètre
+	 * @param valeur valeur du paramètre
+	 */
 	public void addParam(String nom, String valeur){
 		parametres.add(new BasicNameValuePair(nom,valeur));
 	}
-	
+
+	/**
+	 * Gère la connexion au serveur en tâche de fond
+	 *
+	 * @param urls url du script du serveur
+	 * @return rien (null)
+	 */
 	@Override
 	protected Long doInBackground(String... urls) {
 
@@ -50,10 +66,14 @@ public class AccesHTTP extends AsyncTask<String, Integer, Long> {
 		} catch (IOException e) {
             Log.d("Erreur IOException", e.toString()) ;
 		}
-
         return null;
 	}
 
+	/**
+	 * Exécuté dès qu'une réponse est reçu de la fonction doInBackground, appel la fonction processFinish
+	 *
+	 * @param result resultat reçu
+	 */
 	@Override
 	protected void onPostExecute(Long result) {
 		// ret contient l'information récupérée

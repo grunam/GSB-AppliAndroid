@@ -8,6 +8,11 @@ import android.widget.DatePicker;
 import java.lang.reflect.Field;
 import java.util.Hashtable;
 
+/**
+ * Classe avec des méthodes et propriétés (sérialisation, modification des datePicker) communes pour les activity.
+ * @author Emds
+ *
+ */
 public abstract class Global {
 
     // tableau d'informations mémorisées

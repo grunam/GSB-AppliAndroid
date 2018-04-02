@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Suividevosfrais.iml" filepath="$PROJECT_DIR$/Suividevosfrais.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GSB-AppliAndroid.iml" filepath="$PROJECT_DIR$/GSB-AppliAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

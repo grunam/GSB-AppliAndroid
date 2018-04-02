@@ -51,6 +51,16 @@ public class TransfertActivity extends AppCompatActivity {
         cmdTransfertTransferer_clic() ;
     }
 
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        String msg = "Statut : attente de transfert";
+        txtStatus = findViewById(R.id.txtStatus) ;
+        txtStatus.setText(msg);
+    }
+
     /**
      * Création du menu avec des items
      *
@@ -86,6 +96,8 @@ public class TransfertActivity extends AppCompatActivity {
         findViewById(R.id.cmdTransfertTransferer).setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
+                String msg = "Statut : connexion en cours";
+                txtStatus.setText(msg);
                 String success = "0";
                 String status = "0";
                 String username = "" ;

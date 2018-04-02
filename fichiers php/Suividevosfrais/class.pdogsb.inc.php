@@ -49,8 +49,6 @@ class PdoGsb
      */
     public function __construct()
     {
-        
-		
 		try {
             //$conn = new PDO("mysql:host=$serveur;dbname=$bd", $login, $mdp);
             //return $conn;
@@ -65,10 +63,7 @@ class PdoGsb
         } catch (PDOException $e) {
             print "Erreur de connexion PDO ";
             die();
-        }
-		
-		
-		
+        }	
     }
 
     /**
@@ -147,7 +142,6 @@ class PdoGsb
         return $boolReturn;
     }
 	
-	
 	/**
      * Teste si un visiteur possède une fiche de frais
      * pour le mois et l'id passés en paramètres
@@ -180,8 +174,6 @@ class PdoGsb
         return $boolReturn;
     }
 	
-	
-	
 	 /**
      * Cloture les fiches de frais du mois précédent.
      * Passe le champ idEtat à CL et met la date de modif à aujourd'hui.
@@ -201,7 +193,6 @@ class PdoGsb
         $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
         $requetePrepare->execute();
     }
-	
 	
 	 /**
      * Crée une nouvelle fiche de frais et les lignes de frais au forfait
@@ -331,7 +322,6 @@ class PdoGsb
         $requetePrepare->execute();
         return $requetePrepare->fetchAll();
     }
-	
 	
 	/**
      * Met à jour la table ligneFraisForfait pour un visiteur,

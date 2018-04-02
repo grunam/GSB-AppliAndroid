@@ -4,20 +4,6 @@ require_once './class.pdogsb.inc.php';
 
 $pdo = PdoGsb::getPdoGsb();
 
-/*
-$visiteur = $pdo->getInfosVisiteur("dandre", "oppg5");
-print_r(json_encode($visiteur));
-echo "<br>";
-$response = array();
-
-$response["success"] = "1";
-$response["status"] = utf8_encode ("authentification réussie !");
-$response["username"] = $visiteur["login"];
-$response["mdp"] = $visiteur["mdp"];
-
-print_r(json_encode($response));
-
-*/
 
 // test si le paramètre "operation" est présent
 if (isset($_REQUEST["operation"])) {
@@ -39,7 +25,7 @@ if (isset($_REQUEST["operation"])) {
 			$response = array();
 			
 			$visiteur = $pdo->getInfosVisiteur($login, $mdp);
-			if (!is_array($visiteur)) {
+			if (!is_array($visiteur) || $visiteur["comptable"] == 1) {
 				$response["success"] = "0";
 				$response["status"] = utf8_encode ("username ou password incorrect(s)!");
 				$response["username"] = "";
@@ -64,10 +50,6 @@ if (isset($_REQUEST["operation"])) {
 			//print "Erreur !" . $e->getMessage();
 			//die();
 		}
-
-	
-	
-	
 	
 	// enregistrement dans la table profil du profil reçu
 	}elseif ($_REQUEST["operation"]=="enreg") {
@@ -127,11 +109,9 @@ if (isset($_REQUEST["operation"])) {
 				$response["username"] = $visiteur["login"];
 				$response["mdp"] = $visiteur["mdp"];
 				print(json_encode($response));
-				
-				
+					
 			}
-			
-			
+				
 		// capture d'erreur d'accès à la base de données
 		} catch (PDOException $e) {
 			$response["success"] = "0";
@@ -141,8 +121,7 @@ if (isset($_REQUEST["operation"])) {
 			print(json_encode($response));
 			//print "Erreur !" . $e->getMessage();
 			//die();
-		}	
-			
+		}		
 		
 	}
 

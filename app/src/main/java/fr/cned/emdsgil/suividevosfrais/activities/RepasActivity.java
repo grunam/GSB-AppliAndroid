@@ -95,14 +95,14 @@ public class RepasActivity extends AppCompatActivity {
 		if (Global.listFraisMois.containsKey(key)) {
 			qte = Global.listFraisMois.get(key).getRepas() ;
 		}
-		((EditText)findViewById(R.id.txtEtape)).setText(String.format(Locale.FRANCE, "%d", qte)) ;
+		((EditText)findViewById(R.id.txtRepas)).setText(String.format(Locale.FRANCE, "%d", qte)) ;
 	}
 
 	/**
 	 * Désactive l'EditText pour interdire la saisie directe des km.
 	 */
 	private void interditSaisie(){
-		EditText editTextSaisie = findViewById(R.id.txtEtape);
+		EditText editTextSaisie = findViewById(R.id.txtRepas);
 		editTextSaisie.setFocusable(false);
 		editTextSaisie.setEnabled(false);
 		editTextSaisie.setTextColor(Color.BLACK);
@@ -176,7 +176,7 @@ public class RepasActivity extends AppCompatActivity {
 	 */
 	private void enregNewQte() {
 		// enregistrement dans la zone de texte
-		((EditText)findViewById(R.id.txtEtape)).setText(String.format(Locale.FRANCE, "%d", qte)) ;
+		((EditText)findViewById(R.id.txtRepas)).setText(String.format(Locale.FRANCE, "%d", qte)) ;
 		// enregistrement dans la liste
 		Integer key = annee*100+mois ;
 		if (!Global.listFraisMois.containsKey(key)) {

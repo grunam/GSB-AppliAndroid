@@ -166,9 +166,9 @@ public class KmActivity extends AppCompatActivity {
     	uneDate.init(uneDate.getYear(), uneDate.getMonth(), uneDate.getDayOfMonth(), new OnDateChangedListener(){
 			@Override
 			public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-				valoriseProprietes() ;				
+				valoriseProprietes() ;
 			}
-    	});       	
+    	});
     }
 
 	/**

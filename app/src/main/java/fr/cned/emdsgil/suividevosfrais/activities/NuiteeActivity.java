@@ -154,7 +154,7 @@ public class NuiteeActivity extends AppCompatActivity {
     		public void onClick(View v) {
    				qte = Math.max(0, qte-1) ; // suppression de 10 si possible
     			enregNewQte() ;
-     		}
+     			}
     	}) ;    	
     }
 
@@ -168,7 +168,7 @@ public class NuiteeActivity extends AppCompatActivity {
 			public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 				valoriseProprietes() ;				
 			}
-    	});       	
+		    	});
     }
 
 	/**

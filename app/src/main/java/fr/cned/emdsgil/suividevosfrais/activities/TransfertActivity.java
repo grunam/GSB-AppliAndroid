@@ -1,5 +1,6 @@
 package fr.cned.emdsgil.suividevosfrais.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.os.Handler;
 
 import org.json.JSONArray;
 
@@ -31,8 +34,8 @@ public class TransfertActivity extends AppCompatActivity {
     // propriétés
     private EditText txtUsername ;
     private EditText txtPassword ;
-    private TextView txtStatus ;
     private ControleAcces controleAcces ;
+    private Toast alert;
 
     /**
      * Initialisation de l'activity
@@ -46,21 +49,9 @@ public class TransfertActivity extends AppCompatActivity {
         setTitle("GSB : Transfert des données");
         txtUsername = findViewById(R.id.txtUsername) ;
         txtPassword = findViewById(R.id.txtPassword) ;
-        txtStatus = findViewById(R.id.txtStatus) ;
         controleAcces = ControleAcces.getInstance(this);
         cmdTransfertTransferer_clic() ;
     }
-
-    /*
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-        String msg = "Statut : attente de transfert";
-        txtStatus = findViewById(R.id.txtStatus) ;
-        txtStatus.setText(msg);
-    }
-    */
 
     /**
      * Création du menu avec des items
@@ -111,6 +102,8 @@ public class TransfertActivity extends AppCompatActivity {
                 if (username.length() == 0 || mdp.length() == 0) {
                     Toast.makeText(TransfertActivity.this, "Veuillez saisir tous les champs", Toast.LENGTH_SHORT).show();
                 }else{
+                    alert = Toast.makeText(TransfertActivity.this, "Statut : connexion...", Toast.LENGTH_LONG);
+                    alert.show();
                     afficheResult(success, status, username, mdp, data) ;
                 }
             }
@@ -183,10 +176,13 @@ public class TransfertActivity extends AppCompatActivity {
         Log.d("controleAcces.getUsername()", "************controleAcces.getUsername() = "+controleAcces.getUsername());
         Log.d("controleAcces.getMdp()", "************controleAcces.getMdp() = "+controleAcces.getMdp());
         Log.d("controleAcces.getStatus()", "************controleAcces.getStatus() = "+controleAcces.getStatus());
-        //txtStatus = findViewById(R.id.txtStatus) ;
         if(controleAcces.getSuccess().toString().equals("1")) {
             String msg = "Statut : "+controleAcces.getStatus();
-            txtStatus.setText(msg);
+            if (alert == null) {
+                alert = Toast.makeText(TransfertActivity.this, msg, Toast.LENGTH_LONG);
+            }
+            alert.setText(msg);
+            alert.show();
             String success = "2";
             String status = "0";
             String username = controleAcces.getUsername() ;
@@ -195,10 +191,13 @@ public class TransfertActivity extends AppCompatActivity {
             afficheResult(success, status, username, mdp, data) ;
         } else {
 
-            String msg = "Statut : "+controleAcces.getStatus();
+            final String msg = "Statut : "+controleAcces.getStatus();
             Log.d("test final", "************ Test Final = "+msg);
-            //txtStatus = findViewById(R.id.txtStatus) ;
-            txtStatus.setText(msg);
+            if (alert == null) {
+                alert = Toast.makeText(TransfertActivity.this, msg, Toast.LENGTH_LONG);
+            }
+            alert.setText(msg);
+            alert.show();
         }
     }
 

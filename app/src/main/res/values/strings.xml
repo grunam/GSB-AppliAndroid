@@ -35,6 +35,5 @@
     <string name="title_login">Login</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="statut">Statut : attente de transfert</string>
     <string name="transferer">Transférer</string>
 </resources>

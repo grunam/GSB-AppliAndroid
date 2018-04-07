@@ -43,7 +43,7 @@ if (isset($_REQUEST["operation"])) {
 		// capture d'erreur d'accès à la base de données
 		} catch (PDOException $e) {
 			$response["success"] = "0";
-			$response["status"] = "Erreur !" . $e->getMessage();
+			$response["status"] = "Erreur !";
 			$response["username"] = "";
 			$response["mdp"] = "";
 			print(json_encode($response));
@@ -115,7 +115,7 @@ if (isset($_REQUEST["operation"])) {
 		// capture d'erreur d'accès à la base de données
 		} catch (PDOException $e) {
 			$response["success"] = "0";
-			$response["status"] = "erreur !" ;
+			$response["status"] = "erreur !";
 			$response["username"] = "";
 			$response["mdp"] = "";
 			print(json_encode($response));

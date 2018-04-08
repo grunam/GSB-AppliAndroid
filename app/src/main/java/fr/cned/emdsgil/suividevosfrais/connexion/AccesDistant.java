@@ -21,6 +21,7 @@ public class AccesDistant implements AsyncResponse {
 
     // constante
     private static final String SERVERADDR = "http://192.168.1.39/Suividevosfrais/serveurfrais.php";
+    //private static final String SERVERADDR = "http://www.namiktiab.com/GSB-AppliAndroid/fichiers_php/Suividevosfrais/serveurfrais.php";
     private ControleAcces controle ;
 
     /**

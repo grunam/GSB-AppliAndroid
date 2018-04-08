@@ -91,7 +91,7 @@ public class Profil {
     }
 
     /**
-     * Récupération du mdp
+     * Récupération du mot de passe
      *
      * @return la valeur de la propriété mdp
      */

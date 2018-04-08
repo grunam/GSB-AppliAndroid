@@ -158,7 +158,7 @@ public class EtapeActivity extends AppCompatActivity {
     }
 
 	/**
-     * Sur le changement de date : mise à jour de l'affichage de la qte
+     * Sur le changement de date : mise à jour de l'affichage de la quantité
      */
     private void dat_clic() {   	
     	final DatePicker uneDate = (DatePicker) findViewById(R.id.datEtape);
@@ -171,7 +171,7 @@ public class EtapeActivity extends AppCompatActivity {
     }
 
 	/**
-	 * Enregistrement dans la zone de texte et dans la liste de la nouvelle qte, à la date choisie
+	 * Enregistrement dans la zone de texte et dans la liste de la nouvelle quantité, à la date choisie
 	 */
 	private void enregNewQte() {
 		// enregistrement dans la zone de texte

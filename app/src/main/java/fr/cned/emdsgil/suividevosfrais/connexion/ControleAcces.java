@@ -125,7 +125,7 @@ public final class ControleAcces {
     }
 
     /**
-     * Récupération du mdp
+     * Récupération du mot de passe
      *
      * @return la valeur de la propriété mdp
      */

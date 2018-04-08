@@ -20,7 +20,6 @@ if (isset($_REQUEST["operation"])) {
 			$login = $donnee[2] ;
 			$mdp = $donnee[3] ;
 	
-			$pdo = PdoGsb::getPdoGsb();
 			//$cnx = connexionPDO();
 			$response = array();
 			
@@ -43,7 +42,7 @@ if (isset($_REQUEST["operation"])) {
 		// capture d'erreur d'accès à la base de données
 		} catch (PDOException $e) {
 			$response["success"] = "0";
-			$response["status"] = "Erreur !";
+			$response["status"] = "Erreur !" . $e->getMessage();
 			$response["username"] = "";
 			$response["mdp"] = "";
 			print(json_encode($response));
@@ -115,7 +114,7 @@ if (isset($_REQUEST["operation"])) {
 		// capture d'erreur d'accès à la base de données
 		} catch (PDOException $e) {
 			$response["success"] = "0";
-			$response["status"] = "erreur !";
+			$response["status"] = "erreur !". $e->getMessage();
 			$response["username"] = "";
 			$response["mdp"] = "";
 			print(json_encode($response));

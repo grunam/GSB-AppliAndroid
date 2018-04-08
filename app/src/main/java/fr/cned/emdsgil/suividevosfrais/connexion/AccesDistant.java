@@ -65,7 +65,7 @@ public class AccesDistant implements AsyncResponse {
 
     /**
      * Envoi d'informations vers le serveur distant
-     * @param operation opération éxécutée sur leserveur distant (connexion ou enregistrement)
+     * @param operation opération éxécutée sur le serveur distant (connexion ou enregistrement)
      * @param lesDonneesJSON les données envoyées au serveur
      */
     public void envoi(String operation, JSONArray lesDonneesJSON){
